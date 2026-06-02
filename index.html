@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Empath Shield — 11:11 Effect</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-void: #f4f0eb;
+    --bg-primary: #ede8e2;
+    --bg-card: #e4dfd8;
+    --bg-elevated: #d8d2ca;
+    --accent-teal: #336063;
+    --accent-teal-mid: #4D869B;
+    --accent-teal-lt: #88BAC8;
+    --accent-gold: #c9a84c;
+    --accent-mauve: #7a4060;
+    --accent-mauve-mid: #b08898;
+    --accent-silver: #c8c0c8;
+    --text-primary: #1a1a1a;
+    --text-soft: #2e3038;
+    --text-muted: #5a6470;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body: 'Jost', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+
+  @keyframes dustFade {
+    0%   { opacity: 0.9; transform: translate(-50%,-50%) scale(1); }
+    100% { opacity: 0; transform: translate(calc(-50% + var(--drift,0px)), calc(-50% - 28px)) scale(0.1); }
+  }
+  @keyframes effectGlow {
+    0%   { box-shadow: 0 0 20px 3px rgba(139,95,120,0.55); }
+    50%  { box-shadow: 0 0 28px 6px rgba(180,140,165,0.7), 0 0 50px 10px rgba(210,200,210,0.25); }
+    100% { box-shadow: 0 0 20px 3px rgba(139,95,120,0.55); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes breathPulse {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.06); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  body { font-family: var(--font-body); background: var(--bg-void); color: var(--text-primary); min-height: 100vh; }
+
+  /* HEADER */
+  .site-header {
+    background: var(--bg-primary);
+    border-bottom: 1px solid rgba(51,96,99,0.15);
+    padding: 28px 24px 20px;
+    text-align: center;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent-teal);
+    margin-bottom: 8px;
+  }
+  .site-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 600;
+    font-style: italic;
+    background: linear-gradient(135deg, #336063 0%, #1a1a1a 50%, #c9a84c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 6px;
+    line-height: 1.2;
+  }
+  .site-header p { font-weight: 300; font-size: 15px; color: var(--text-muted); }
+  .header-divider {
+    text-align: center;
+    color: var(--accent-gold);
+    letter-spacing: 1.5em;
+    font-size: 10px;
+    font-family: var(--font-mono);
+    margin: 16px 0 0;
+  }
+
+  /* NAV */
+  .nav {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    padding: 16px 16px 0;
+    flex-wrap: wrap;
+    background: var(--bg-void);
+  }
+  .nav-btn {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border-radius: 4px;
+    border: 1px solid rgba(51,96,99,0.2);
+    background: transparent;
+    color: var(--accent-teal);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 36px;
+  }
+  .nav-btn.active { border-color: rgba(51,96,99,0.6); background: var(--accent-teal); color: var(--bg-void); }
+  .nav-btn:hover:not(.active) { border-color: rgba(51,96,99,0.45); background: rgba(51,96,99,0.06); }
+
+  /* MAIN */
+  .main { max-width: 700px; margin: 0 auto; padding: 32px 20px 80px; }
+  .section { animation: fadeUp 0.3s ease both; }
+  .hidden { display: none !important; }
+
+  .section-title { font-family: var(--font-display); font-size: clamp(22px, 4vw, 30px); font-weight: 400; font-style: italic; color: var(--text-primary); margin-bottom: 6px; }
+  .section-desc { font-weight: 300; font-size: 15px; color: var(--text-muted); margin-bottom: 28px; line-height: 1.7; }
+
+  /* CARDS */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid rgba(51,96,99,0.18);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s ease;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(51,96,99,0.25), transparent);
+  }
+  .card.clickable { cursor: pointer; }
+  .card.clickable:hover { background: var(--bg-elevated); border-color: rgba(51,96,99,0.35); }
+  .card.selected { background: var(--bg-elevated); border-color: rgba(51,96,99,0.5); }
+  .card.left-accent { border-left: 3px solid rgba(51,96,99,0.4); }
+  .card.gold-top::before { background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
+  .card-title { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .card-desc { font-weight: 300; font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+  .section-divider { text-align: center; margin: 32px 0; color: var(--accent-gold); letter-spacing: 1.5em; font-size: 10px; font-family: var(--font-mono); }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    min-height: 42px;
+    background: linear-gradient(135deg, #7a4060, #b08898, #c8c0c8);
+    color: #f4f0eb;
+    animation: effectGlow 4s ease-in-out infinite;
+    transition: opacity 0.2s ease;
+    margin-right: 10px;
+    margin-top: 8px;
+  }
+  .btn:hover { opacity: 0.88; }
+  .btn-sm { padding: 8px 20px; font-size: 9px; min-height: 36px; }
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid rgba(51,96,99,0.45);
+    color: var(--accent-teal);
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+    min-height: 42px;
+    margin-top: 8px;
+    transition: all 0.2s ease;
+    animation: none;
+  }
+  .btn-ghost:hover { border-color: var(--accent-teal); color: var(--text-primary); }
+  .btn-ghost-sm { padding: 8px 16px; font-size: 9px; min-height: 36px; }
+
+  /* AFFIRM BOX */
+  .affirm-box {
+    background: linear-gradient(135deg, var(--bg-card), var(--bg-elevated));
+    border: 1px solid rgba(51,96,99,0.25);
+    border-radius: 8px;
+    padding: 28px 24px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .affirm-text { font-family: var(--font-display); font-size: clamp(18px, 3vw, 24px); font-style: italic; font-weight: 400; color: var(--text-primary); line-height: 1.5; }
+
+  /* STEP BOX */
+  .step-box { background: var(--bg-primary); border: 1px solid rgba(51,96,99,0.15); border-radius: 6px; padding: 16px 20px; margin-bottom: 10px; transition: opacity 0.3s ease; }
+  .step-box.dimmed { opacity: 0.4; }
+  .step-num { font-family: var(--font-mono); font-size: 10px; color: var(--accent-gold); letter-spacing: 0.2em; margin-bottom: 6px; }
+  .step-text { font-weight: 300; font-size: 15px; color: var(--text-soft); line-height: 1.7; }
+
+  /* RATINGS */
+  .rating-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 16px 0; }
+  .rating-btn {
+    width: 42px; height: 42px; border-radius: 50%;
+    border: 1px solid rgba(51,96,99,0.3); background: transparent;
+    color: var(--accent-teal); font-family: var(--font-mono); font-size: 12px;
+    cursor: pointer; transition: all 0.2s ease;
+  }
+  .rating-btn.selected { border: 2px solid var(--accent-teal); background: var(--accent-teal); color: var(--bg-void); }
+  .rating-btn:hover:not(.selected) { background: rgba(51,96,99,0.08); }
+
+  /* DRAIN */
+  .drain-card { display: flex; justify-content: space-between; align-items: flex-start; }
+  .drain-check { font-family: var(--font-mono); font-size: 16px; color: rgba(51,96,99,0.3); margin-left: 16px; flex-shrink: 0; transition: color 0.2s ease; }
+  .card.selected .drain-check { color: var(--accent-teal); }
+
+  /* CLEARING */
+  .clearing-header { display: flex; justify-content: space-between; align-items: center; }
+  .clearing-icon { font-family: var(--font-display); font-size: 24px; color: var(--accent-teal); margin-left: 16px; }
+  .clearing-body { display: none; margin-top: 12px; border-top: 1px solid rgba(51,96,99,0.15); padding-top: 12px; font-weight: 300; font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+  .clearing-body.open { display: block; }
+
+  /* SHIELD GRID */
+  .shield-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+  .shield-symbol { font-size: 32px; margin-bottom: 8px; display: block; }
+
+  /* BREATH */
+  .breath-area { text-align: center; margin: 20px 0; }
+  .breath-circle {
+    width: 120px; height: 120px; border-radius: 50%;
+    border: 2px solid var(--accent-teal-lt);
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    margin: 0 auto; transition: all 0.5s ease;
+    animation: breathPulse 4s ease-in-out infinite;
+  }
+  .breath-phase-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; }
+  .breath-count { font-family: var(--font-display); font-size: 36px; font-weight: 300; color: var(--text-primary); line-height: 1; }
+  .breath-rounds { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* JOURNAL */
+  .journal-textarea {
+    width: 100%; min-height: 160px; background: var(--bg-card);
+    border: 1px solid rgba(51,96,99,0.25); border-radius: 6px; padding: 16px;
+    font-family: var(--font-body); font-weight: 300; font-size: 15px; color: var(--text-primary);
+    line-height: 1.7; resize: vertical; outline: none; transition: border-color 0.2s ease;
+  }
+  .journal-textarea:focus { border-color: rgba(51,96,99,0.5); }
+
+  /* ANCHOR */
+  .anchor-practice { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(51,96,99,0.12); }
+  .anchor-practice:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .anchor-practice-title { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="eyebrow">11:11 Effect · Free Gem</div>
+  <h1>The Empath Shield</h1>
+  <p>Energy protection for healthcare workers &amp; open-channel practitioners</p>
+  <div class="header-divider">✦ &nbsp; ☽ &nbsp; ✦</div>
+</header>
+
+<nav class="nav">
+  <button class="nav-btn active" data-section="assess" onclick="showSection('assess')">◎ Assess</button>
+  <button class="nav-btn" data-section="clear" onclick="showSection('clear')">✦ Clear</button>
+  <button class="nav-btn" data-section="shield" onclick="showSection('shield')">☽ Shield</button>
+  <button class="nav-btn" data-section="anchor" onclick="showSection('anchor')">⬡ Anchor</button>
+  <button class="nav-btn" data-section="journal" onclick="showSection('journal')">☿ Journal</button>
+</nav>
+
+<main class="main">
+
+  <!-- ASSESS -->
+  <div class="section" id="section-assess">
+    <p class="section-title">Check Your Field</p>
+    <p class="section-desc">Before you can protect, you need to know what you're working with. Identify your drain patterns so you can choose the right tools.</p>
+
+    <div style="margin-bottom:28px">
+      <div class="eyebrow" style="margin-bottom:16px">Post-Shift Energy Rating</div>
+      <p class="card-desc" style="margin-bottom:12px">How drained are you feeling right now? (1 = running on empty, 10 = totally clear)</p>
+      <div class="rating-row" id="ratingRow">
+        <button class="rating-btn" onclick="setRating(1)">1</button>
+        <button class="rating-btn" onclick="setRating(2)">2</button>
+        <button class="rating-btn" onclick="setRating(3)">3</button>
+        <button class="rating-btn" onclick="setRating(4)">4</button>
+        <button class="rating-btn" onclick="setRating(5)">5</button>
+        <button class="rating-btn" onclick="setRating(6)">6</button>
+        <button class="rating-btn" onclick="setRating(7)">7</button>
+        <button class="rating-btn" onclick="setRating(8)">8</button>
+        <button class="rating-btn" onclick="setRating(9)">9</button>
+        <button class="rating-btn" onclick="setRating(10)">10</button>
+      </div>
+      <p class="card-desc hidden" id="ratingFeedback" style="margin-top:12px;font-style:italic"></p>
+    </div>
+
+    <div class="section-divider">✦ &nbsp; ☽ &nbsp; ✦</div>
+
+    <div class="eyebrow" style="margin-bottom:16px">Identify Your Drain Patterns</div>
+    <p class="card-desc" style="margin-bottom:16px">Select all that resonate. Awareness is the first layer of protection.</p>
+
+    <div class="card clickable" data-drain="absorber" onclick="toggleDrain(this)">
+      <div class="drain-card">
+        <div><div class="card-title">Full Absorber</div><div class="card-desc">You take on everything — emotions, symptoms, even physical sensations that aren't yours.</div></div>
+        <div class="drain-check">○</div>
+      </div>
+    </div>
+    <div class="card clickable" data-drain="pleaser" onclick="toggleDrain(this)">
+      <div class="drain-card">
+        <div><div class="card-title">Boundary Dropper</div><div class="card-desc">You say yes when you mean no. Overgiving until you're hollow.</div></div>
+        <div class="drain-check">○</div>
+      </div>
+    </div>
+    <div class="card clickable" data-drain="rescuer" onclick="toggleDrain(this)">
+      <div class="drain-card">
+        <div><div class="card-title">The Rescuer</div><div class="card-desc">You can't leave until everyone is okay. Their suffering activates your nervous system.</div></div>
+        <div class="drain-check">○</div>
+      </div>
+    </div>
+    <div class="card clickable" data-drain="overfeeler" onclick="toggleDrain(this)">
+      <div class="drain-card">
+        <div><div class="card-title">Emotional Mirror</div><div class="card-desc">You feel their grief, their fear, their despair as if it's your own.</div></div>
+        <div class="drain-check">○</div>
+      </div>
+    </div>
+    <div class="card clickable" data-drain="fixer" onclick="toggleDrain(this)">
+      <div class="drain-card">
+        <div><div class="card-title">Energy Fixer</div><div class="card-desc">You pour your own light into the room, trying to shift what isn't yours to shift.</div></div>
+        <div class="drain-check">○</div>
+      </div>
+    </div>
+
+    <div class="affirm-box hidden" id="drainResult" style="margin-top:24px">
+      <div class="eyebrow">Pattern recognised</div>
+      <p class="card-desc" id="drainResultText" style="margin-top:8px"></p>
+      <button class="btn" style="margin-top:12px" onclick="showSection('clear')">Go to Clear →</button>
+    </div>
+  </div>
+
+  <!-- CLEAR -->
+  <div class="section hidden" id="section-clear">
+    <p class="section-title">Release What Isn't Yours</p>
+    <p class="section-desc">These are fast, effective clearing practices for between patients, after difficult shifts, or whenever you feel heavy. No tools required.</p>
+
+    <div style="margin-bottom:28px">
+      <div class="eyebrow">Guided Release Breath</div>
+      <p class="card-desc" style="margin:8px 0 16px">6 rounds. 4 in / 2 hold / 6 out. On each exhale, silently say "Not mine."</p>
+      <div class="breath-area">
+        <button class="btn" id="breathStartBtn" onclick="startBreath()">Begin Breath Work</button>
+        <div class="breath-circle hidden" id="breathCircle">
+          <div class="breath-phase-label" id="breathPhaseLabel" style="color:#88BAC8">inhale</div>
+          <div class="breath-count" id="breathCountDisplay">4</div>
+          <div class="breath-rounds" id="breathRoundsDisplay">Round 1/6</div>
+        </div>
+        <div class="affirm-box hidden" id="breathComplete" style="padding:20px;margin-top:16px">
+          <div style="font-size:24px;color:#336063;margin-bottom:8px">✦</div>
+          <p class="affirm-text" style="font-size:18px">Field cleared. Six rounds complete.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider">✦ &nbsp; ☽ &nbsp; ✦</div>
+
+    <div class="eyebrow">Choose a Clearing Method</div>
+    <p class="card-desc" style="margin:8px 0 16px">Tap any practice to read the full instructions.</p>
+
+    <div class="card clickable" onclick="toggleClearing(this,'c1')">
+      <div class="clearing-header"><div><div class="eyebrow" style="margin-bottom:4px">2 min</div><div class="card-title">Release Breath</div></div><div class="clearing-icon">~</div></div>
+      <div class="clearing-body" id="c1">Inhale through the nose for 4 counts. Hold for 2. Exhale through the mouth for 6 — push the last of the breath out. On each exhale, silently say 'Not mine.' Do this 6 times. Feel the borrowed emotions exit on every breath.</div>
+    </div>
+    <div class="card clickable" onclick="toggleClearing(this,'c2')">
+      <div class="clearing-header"><div><div class="eyebrow" style="margin-bottom:4px">1 min</div><div class="card-title">Body Shake</div></div><div class="clearing-icon">⌇</div></div>
+      <div class="clearing-body" id="c2">Stand if you can. Shake your hands out like you're flicking water off them. Let the shake travel up your arms, into your shoulders, your torso. Let your whole body shake it off for 60 seconds. Animals do this naturally after stress. So can you.</div>
+    </div>
+    <div class="card clickable" onclick="toggleClearing(this,'c3')">
+      <div class="clearing-header"><div><div class="eyebrow" style="margin-bottom:4px">30 sec</div><div class="card-title">Verbal Declaration</div></div><div class="clearing-icon">◉</div></div>
+      <div class="clearing-body" id="c3">Say aloud or in your mind: 'I release all energy, emotion, and thought that does not belong to me. It returns to its source, transformed into light. My field is clear. My field is mine.' Repeat three times with conviction.</div>
+    </div>
+    <div class="card clickable" onclick="toggleClearing(this,'c4')">
+      <div class="clearing-header"><div><div class="eyebrow" style="margin-bottom:4px">3 min</div><div class="card-title">Water Reset</div></div><div class="clearing-icon">≋</div></div>
+      <div class="clearing-body" id="c4">Wash your hands up to the elbows with intention. As the water runs, visualise grey or murky energy washing off your skin and down the drain. Cold water amplifies this. Dry your hands slowly and deliberately — this seals the reset.</div>
+    </div>
+    <div class="card clickable" onclick="toggleClearing(this,'c5')">
+      <div class="clearing-header"><div><div class="eyebrow" style="margin-bottom:4px">5 min</div><div class="card-title">Smoke Aura Sweep</div></div><div class="clearing-icon">∿</div></div>
+      <div class="clearing-body" id="c5">Light sage, palo santo, or incense. Start at the crown of your head and sweep slowly downward around your body. Move smoke around your back, under your arms, around your feet. Visualise the smoke lifting and neutralising anything that attached during your shift.</div>
+    </div>
+
+    <div style="margin-top:24px">
+      <button class="btn" onclick="showSection('shield')">Move to Shielding →</button>
+    </div>
+  </div>
+
+  <!-- SHIELD -->
+  <div class="section hidden" id="section-shield">
+    <p class="section-title">Build Your Protection Field</p>
+    <p class="section-desc">Choose the shield that matches what you're walking into. Each visualisation takes under two minutes and creates an energetic boundary that holds for your shift.</p>
+
+    <div class="shield-grid" id="shieldGrid">
+      <div class="card clickable" onclick="openShield('mirror')">
+        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#4D869B66,transparent)"></div>
+        <span class="shield-symbol" style="color:#4D869B">◈</span>
+        <div class="card-title">Mirror Shield</div>
+        <div class="card-desc" style="margin-top:6px">Returns energy to its source with love. Ideal for high-drama or manipulative energy.</div>
+      </div>
+      <div class="card clickable" onclick="openShield('violet')">
+        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#7a406066,transparent)"></div>
+        <span class="shield-symbol" style="color:#7a4060">✦</span>
+        <div class="card-title">Violet Flame</div>
+        <div class="card-desc" style="margin-top:6px">Transmutes low-frequency energy into light. Use after heavy emotional exposure.</div>
+      </div>
+      <div class="card clickable" onclick="openShield('bubble')">
+        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#c9a84c66,transparent)"></div>
+        <span class="shield-symbol" style="color:#c9a84c">○</span>
+        <div class="card-title">Golden Bubble</div>
+        <div class="card-desc" style="margin-top:6px">Permeable to love and truth, impermeable to drain. Perfect for daily ward rounds.</div>
+      </div>
+      <div class="card clickable" onclick="openShield('anchor')">
+        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#33606366,transparent)"></div>
+        <span class="shield-symbol" style="color:#336063">⬡</span>
+        <div class="card-title">Root Anchor</div>
+        <div class="card-desc" style="margin-top:6px">Grounds you into earth energy so transference can't destabilise you.</div>
+      </div>
+    </div>
+
+    <div class="hidden" id="shieldDetail">
+      <button class="btn-ghost" onclick="closeShield()">← All Shields</button>
+      <div class="card" id="shieldDetailCard" style="margin-top:16px;cursor:default"></div>
+    </div>
+  </div>
+
+  <!-- ANCHOR -->
+  <div class="section hidden" id="section-anchor">
+    <p class="section-title">Anchor In — Daily Practice</p>
+    <p class="section-desc">Protection is a daily practice, not a one-time fix. Use these affirmations and check-ins to reinforce your field every shift.</p>
+
+    <div class="eyebrow">Today's Affirmation</div>
+    <div class="affirm-box" style="margin-top:12px">
+      <span style="font-size:18px;color:#c9a84c;margin-bottom:14px;display:block">☽</span>
+      <p class="affirm-text" id="affirmText">I am a clear channel, not a sponge.</p>
+      <button class="btn-ghost btn-ghost-sm" style="margin-top:16px" onclick="nextAffirm()">Next Affirmation →</button>
+    </div>
+
+    <div class="section-divider">✦ &nbsp; ☽ &nbsp; ✦</div>
+
+    <div class="eyebrow">Three-Point Energy Check</div>
+    <p class="card-desc" style="margin:10px 0 16px">Run this check before entering any high-energy space.</p>
+
+    <div class="step-box"><div class="step-num">CHECK 1</div><div class="step-text">Aura — Is your field clearly defined? Visualise bright edges around your body.</div></div>
+    <div class="step-box"><div class="step-num">CHECK 2</div><div class="step-text">Heart Centre — Are you open to connection but not bleeding out? Set your intention.</div></div>
+    <div class="step-box"><div class="step-num">CHECK 3</div><div class="step-text">Root — Are you grounded to the earth? Feel the floor beneath your feet.</div></div>
+
+    <div class="card gold-top" style="margin-top:24px;cursor:default">
+      <div class="eyebrow" style="margin-bottom:12px">Longer-Term Protection Practices</div>
+      <div class="anchor-practice">
+        <div class="anchor-practice-title">Create a pre-shift ritual</div>
+        <div class="card-desc">Even 3 minutes of intentional shielding before you enter the building changes everything. The shield goes up when you decide, not when you're already overwhelmed.</div>
+      </div>
+      <div class="anchor-practice">
+        <div class="anchor-practice-title">Debrief your body, not just your mind</div>
+        <div class="card-desc">After shift, scan your body from crown to feet. Where is the tension? That's where you absorbed. Address it with breath, movement, or water before you take it home.</div>
+      </div>
+      <div class="anchor-practice">
+        <div class="anchor-practice-title">Recharge in your own energy</div>
+        <div class="card-desc">Silence in the car. A barefoot moment. Your own music. You need time between their energy and your home energy — every single day.</div>
+      </div>
+      <div class="anchor-practice">
+        <div class="anchor-practice-title">Name it to tame it</div>
+        <div class="card-desc">'This is not my grief, it is theirs.' Language creates separation. The moment you name it as transference, it loses its grip on you.</div>
+      </div>
+    </div>
+
+    <button class="btn" onclick="showSection('journal')">Journal This Session →</button>
+  </div>
+
+  <!-- JOURNAL -->
+  <div class="section hidden" id="section-journal">
+    <p class="section-title">Energy Journal</p>
+    <p class="section-desc">Track your patterns over time. The more you document, the faster you'll recognise transference when it's happening — not hours later.</p>
+
+    <div class="card" style="margin-bottom:24px;cursor:default">
+      <div class="eyebrow" style="margin-bottom:10px">Reflection Prompt</div>
+      <p class="affirm-text" style="font-size:18px;font-style:italic;color:#336063" id="journalPrompt">What did I feel today that didn't feel like mine? Describe the sensation.</p>
+      <button class="btn-ghost btn-ghost-sm" style="margin-top:14px" onclick="nextPrompt()">Different Prompt ↺</button>
+    </div>
+
+    <textarea class="journal-textarea" id="journalTextarea" placeholder="Write freely here. No one reads this but you. Dump it all out — what you felt, what wasn't yours, where you lost yourself, what you want to do differently..." oninput="onJournalInput()"></textarea>
+
+    <div class="affirm-box hidden" id="journalFeedback" style="margin-top:16px">
+      <div style="font-size:14px;color:#336063;margin-bottom:8px">✦</div>
+      <p class="card-desc" id="journalFeedbackText" style="font-style:italic"></p>
+    </div>
+
+    <div class="section-divider">✦ &nbsp; ☽ &nbsp; ✦</div>
+
+    <div class="eyebrow" style="margin-bottom:12px">A Note for You</div>
+    <div class="card left-accent" style="cursor:default">
+      <p class="step-text" style="font-style:italic">"Your empathy is not a malfunction. It is the precise tool that makes you exceptional at what you do. The work is not to shut it down — it is to learn the difference between witnessing and absorbing. You can feel everything without keeping it. That is the skill. That is what these tools build."</p>
+      <div class="eyebrow" style="margin-top:12px">— The 11:11 Effect</div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+const SHIELDS = {
+  mirror: { name:"Mirror Shield", symbol:"◈", color:"#4D869B", desc:"Returns energy to its source with love. Ideal for high-drama or manipulative energy.", steps:["Close your eyes and breathe into your heart centre.","Visualise a mirror-bright sphere forming around your entire body.","The reflective surface faces outward — all incoming energy bounces back to its source.","Set the intention: 'What is not mine cannot enter. What is mine remains.'","Seal it with three slow exhales."] },
+  violet: { name:"Violet Flame", symbol:"✦", color:"#7a4060", desc:"Transmutes low-frequency energy into light. Use after heavy emotional exposure.", steps:["Sit for a moment and feel what's sitting in your field.","Visualise a violet-purple flame igniting at your feet.","Let it travel slowly upward through your entire body and aura.","The flame doesn't burn you — it transmutes. Heavy into light. Dense into clear.","When you reach the crown, exhale the smoke. Breathe in fresh white light."] },
+  bubble: { name:"Golden Bubble", symbol:"○", color:"#c9a84c", desc:"Permeable to love and truth, impermeable to drain. Perfect for daily ward rounds.", steps:["Take one grounding breath into your feet.","Imagine liquid gold pouring down from the crown of your head.","It forms a complete bubble around your body — floor to ceiling.","This bubble lets in love, warmth, and genuine connection.","It repels fear, manipulation, and unconscious energy drain."] },
+  anchor: { name:"Root Anchor", symbol:"⬡", color:"#336063", desc:"Grounds you into earth energy so transference can't destabilise you.", steps:["Feel the soles of your feet (or sit bones if seated).","Visualise roots growing from your feet, deep into the earth's core.","The earth is infinite — it can handle all the dense energy you offload.","State: 'I am rooted. I am present. I am not their experience.'","Breathe up earth energy — cool, green, steady — into your base chakra."] }
+};
+
+const AFFIRMATIONS = ["I am a clear channel, not a sponge.","I can hold space without holding their pain.","My sensitivity is a gift — not a liability.","I serve from overflow, never from empty.","What is not mine does not have to stay.","I am grounded in my own energy field.","Compassion does not require absorption.","I tend to others AND to myself. Both are sacred."];
+
+const JOURNAL_PROMPTS = ["What did I feel today that didn't feel like mine? Describe the sensation.","Which patient or interaction left the biggest energetic residue? What did I pick up?","Where in my body did I feel the most tension or heaviness today?","What boundary did I fail to hold today? What would I do differently?","What is one thing I can do tomorrow to protect my energy from the start of the shift?","Describe a moment today where I felt genuinely clear and protected. What made that possible?","What emotions am I carrying right now? Rate each one: mine, theirs, or unclear?","If my aura could speak after today's shift, what would it say it needs?"];
+
+let affirmIdx = 0, promptIdx = 0;
+let selectedDrains = new Set();
+let currentShield = null, shieldStep = 0;
+let breathInterval = null, breathPhase = null, breathTimer = 0, breathRound = 0;
+
+const BREATH_DURATIONS = { inhale:4, hold:2, exhale:6 };
+const BREATH_COLORS   = { inhale:'#88BAC8', hold:'#c9a84c', exhale:'#7a4060' };
+const BREATH_BG       = { inhale:'rgba(136,186,200,0.08)', hold:'rgba(201,168,76,0.08)', exhale:'rgba(122,64,96,0.08)' };
+
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-'+id).classList.remove('hidden');
+  document.querySelector('[data-section="'+id+'"]').classList.add('active');
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+function setRating(n) {
+  document.querySelectorAll('.rating-btn').forEach((b,i) => b.classList.toggle('selected', i+1===n));
+  const fb = document.getElementById('ratingFeedback');
+  fb.classList.remove('hidden');
+  fb.textContent = n<=3 ? "You need a full clearing and shield before anything else. Go to Clear first." : n<=6 ? "Some residue present. A quick clearing then shielding will restore you." : "Field is relatively stable. Maintain your shield and journal what worked today.";
+}
+
+function toggleDrain(el) {
+  const id = el.dataset.drain;
+  const check = el.querySelector('.drain-check');
+  if (selectedDrains.has(id)) { selectedDrains.delete(id); el.classList.remove('selected'); check.textContent='○'; }
+  else { selectedDrains.add(id); el.classList.add('selected'); check.textContent='✓'; }
+  const result = document.getElementById('drainResult');
+  const text   = document.getElementById('drainResultText');
+  if (selectedDrains.size > 0) {
+    result.classList.remove('hidden');
+    const c = selectedDrains.size;
+    text.innerHTML = `You've identified ${c} drain pattern${c>1?'s':''}. Now move to <strong>Clear</strong> to release what's already stuck in your field, then <strong>Shield</strong> to prevent future absorption.`;
+  } else { result.classList.add('hidden'); }
+}
+
+function startBreath() {
+  document.getElementById('breathStartBtn').classList.add('hidden');
+  document.getElementById('breathCircle').classList.remove('hidden');
+  breathRound = 0;
+  runBreathPhase('inhale');
+}
+
+function runBreathPhase(phase) {
+  breathPhase = phase;
+  breathTimer = BREATH_DURATIONS[phase];
+  const circle = document.getElementById('breathCircle');
+  const label  = document.getElementById('breathPhaseLabel');
+  const count  = document.getElementById('breathCountDisplay');
+  const rounds = document.getElementById('breathRoundsDisplay');
+  circle.style.borderColor = BREATH_COLORS[phase];
+  circle.style.background  = BREATH_BG[phase];
+  label.style.color = BREATH_COLORS[phase];
+  label.textContent = phase;
+  count.textContent = breathTimer;
+  rounds.textContent = `Round ${breathRound+1}/6`;
+  if (breathInterval) clearInterval(breathInterval);
+  breathInterval = setInterval(() => {
+    breathTimer--;
+    count.textContent = breathTimer;
+    if (breathTimer <= 0) {
+      clearInterval(breathInterval);
+      if (phase==='inhale') runBreathPhase('hold');
+      else if (phase==='hold') runBreathPhase('exhale');
+      else {
+        breathRound++;
+        if (breathRound >= 6) {
+          document.getElementById('breathCircle').classList.add('hidden');
+          document.getElementById('breathComplete').classList.remove('hidden');
+        } else { runBreathPhase('inhale'); }
+      }
+    }
+  }, 1000);
+}
+
+function toggleClearing(el, instId) {
+  const inst = document.getElementById(instId);
+  const isOpen = inst.classList.contains('open');
+  document.querySelectorAll('.clearing-body').forEach(i => i.classList.remove('open'));
+  document.querySelectorAll('#section-clear .card').forEach(c => c.classList.remove('selected'));
+  if (!isOpen) { inst.classList.add('open'); el.classList.add('selected'); }
+}
+
+function openShield(id) {
+  currentShield = id; shieldStep = 0;
+  document.getElementById('shieldGrid').classList.add('hidden');
+  document.getElementById('shieldDetail').classList.remove('hidden');
+  renderShieldDetail();
+}
+
+function closeShield() {
+  currentShield = null;
+  document.getElementById('shieldGrid').classList.remove('hidden');
+  document.getElementById('shieldDetail').classList.add('hidden');
+}
+
+function renderShieldDetail() {
+  const s = SHIELDS[currentShield];
+  const card = document.getElementById('shieldDetailCard');
+  const stepsHtml = s.steps.map((step, i) => {
+    const dimmed = i > shieldStep ? ' dimmed' : '';
+    const nextBtn  = (i === shieldStep && i < s.steps.length-1) ? `<button class="btn btn-sm" onclick="advanceStep()">Next Step →</button>` : '';
+    const sealBtn  = (i === shieldStep && i === s.steps.length-1) ? `<button class="btn" style="margin-top:16px" onclick="sealShield()">Seal My Shield ✦</button>` : '';
+    return `<div class="step-box${dimmed}"><div class="step-num">STEP ${i+1}</div><div class="step-text">${step}</div>${nextBtn}${sealBtn}</div>`;
+  }).join('');
+
+  card.innerHTML = `
+    <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,${s.color}66,transparent)"></div>
+    <span class="shield-symbol" style="color:${s.color}">${s.symbol}</span>
+    <div class="section-title" style="margin-bottom:0">${s.name}</div>
+    <div class="card-desc" style="margin:8px 0 20px">${s.desc}</div>
+    <div class="eyebrow">Step-by-Step Visualisation</div>
+    <p class="card-desc" style="margin:8px 0 16px">Work through each step slowly. Take at least 3 breaths per step.</p>
+    ${stepsHtml}
+  `;
+}
+
+function advanceStep() { shieldStep++; renderShieldDetail(); }
+
+function sealShield() {
+  const s = SHIELDS[currentShield];
+  document.getElementById('shieldDetailCard').innerHTML = `
+    <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,${s.color}66,transparent)"></div>
+    <div style="text-align:center;padding:8px 0">
+      <div style="font-size:32px;color:${s.color};margin-bottom:12px">${s.symbol}</div>
+      <div class="eyebrow">Shield Active</div>
+      <p class="affirm-text" style="margin-top:10px">Your ${s.name} is sealed and holding. Move into your shift with confidence.</p>
+      <button class="btn" style="margin-top:16px" onclick="showSection('anchor')">Complete the Practice →</button>
+    </div>
+  `;
+}
+
+function nextAffirm() {
+  affirmIdx = (affirmIdx+1) % AFFIRMATIONS.length;
+  document.getElementById('affirmText').textContent = AFFIRMATIONS[affirmIdx];
+}
+
+function nextPrompt() {
+  promptIdx = (promptIdx+1) % JOURNAL_PROMPTS.length;
+  document.getElementById('journalPrompt').textContent = JOURNAL_PROMPTS[promptIdx];
+}
+
+function onJournalInput() {
+  const len = document.getElementById('journalTextarea').value.length;
+  const fb  = document.getElementById('journalFeedback');
+  const txt = document.getElementById('journalFeedbackText');
+  if (len > 20) {
+    fb.classList.remove('hidden');
+    txt.textContent = `You wrote ${len} characters. That's ${len>200?'deep work':'a solid start'}. The act of writing creates separation between you and what isn't yours.`;
+  } else { fb.classList.add('hidden'); }
+}
+
+// cursor dust
+(function() {
+  const colors = ['#88BAC8','#c8d0d8','#7a4060','#c9a84c','#336063'];
+  let last = 0;
+  document.addEventListener('mousemove', function(e) {
+    const now = Date.now();
+    if (now - last < 35) return;
+    last = now;
+    const d = document.createElement('div');
+    const color = colors[Math.floor(Math.random()*colors.length)];
+    const sz    = Math.random()*4+2;
+    const drift = (Math.random()-0.5)*20;
+    d.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:${sz}px;height:${sz}px;border-radius:50%;pointer-events:none;z-index:9999;background:${color};transform:translate(-50%,-50%);animation:dustFade 0.9s ease-out forwards;--drift:${drift}px;`;
+    document.body.appendChild(d);
+    setTimeout(() => { if(d.parentNode) d.parentNode.removeChild(d); }, 900);
+  });
+})();
+</script>
+</body>
+</html>
